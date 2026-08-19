@@ -273,10 +273,32 @@ b {
 
 .nav {
   position: fixed;
-  top: 18px;
+  top: 14px;
   left: 0;
   right: 0;
   z-index: 50;
+}
+
+/* « Notch » : la pastille centrée au-dessus de la barre */
+.notch {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 auto 8px;
+  width: max-content;
+  max-width: 100%;
+  background: var(--ink);
+  color: #fff;
+  font-size: 13px;
+  padding: 7px 16px;
+  border-radius: var(--radius-pill);
+}
+
+@media (max-width: 560px) {
+  .notch {
+    font-size: 11.5px;
+    padding: 6px 12px;
+  }
 }
 
 .nav-inner {
@@ -290,6 +312,103 @@ b {
   border-radius: var(--radius-pill);
   padding: 8px 8px 8px 20px;
   box-shadow: 0 10px 30px -20px #00000030;
+}
+
+.nav-inner.is-open {
+  border-radius: var(--radius);
+  flex-direction: column;
+  align-items: stretch;
+  padding: 14px;
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex: 1;
+}
+
+.nav-link {
+  position: relative;
+  padding-bottom: 3px;
+  color: var(--ink-2);
+  transition: color 0.25s ease;
+}
+
+.nav-link:hover {
+  color: var(--ink);
+}
+
+.nav-underline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--accent);
+  transform-origin: center;
+  display: block;
+}
+
+/* Libellé qui glisse au survol (Top / Bottom de la référence) */
+.swap {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.swap-top,
+.swap-bottom {
+  display: block;
+  transition: transform 0.42s cubic-bezier(0.44, 0, 0.56, 1);
+}
+
+.swap-bottom {
+  position: absolute;
+  inset: 0;
+  transform: translateY(105%);
+}
+
+.btn:hover .swap-top {
+  transform: translateY(-105%);
+}
+
+.btn:hover .swap-bottom {
+  transform: translateY(0);
+}
+
+.nav-drop {
+  overflow: hidden;
+}
+
+.nav-drop-inner {
+  display: grid;
+  gap: 2px;
+  padding-top: 10px;
+}
+
+.nav-drop-inner > a {
+  padding: 14px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.nav-drop-foot {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.nav-drop-foot a {
+  padding: 15px 20px;
+  font-size: 16px;
+  justify-content: center;
 }
 
 .status {
@@ -410,6 +529,9 @@ b {
   .nav-burger {
     display: flex;
   }
+  .nav-bar {
+    width: 100%;
+  }
 }
 
 @media (max-width: 560px) {
@@ -419,13 +541,16 @@ b {
   .nav-inner {
     padding: 8px 8px 8px 18px;
   }
+  .nav-inner.is-open {
+    padding: 14px;
+  }
   .logo {
     font-size: 16px;
   }
 }
 
 @media (min-width: 1081px) {
-  .nav-panel {
+  .nav-drop {
     display: none;
   }
 }
@@ -695,6 +820,16 @@ b {
 .verdict {
   margin-top: 44px;
   text-align: center;
+}
+
+/* Phrase dont les lettres s'allument au scroll */
+.statement {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 34px);
+  line-height: 1.16;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0;
 }
 
 /* ---------- avantages ---------- */

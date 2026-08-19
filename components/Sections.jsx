@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Reveal, Stagger, Item, Counter, Marquee, ease } from "./Motion";
+import { Reveal, Stagger, Item, Counter, Marquee, ScrollChars, SwapText, ease } from "./Motion";
 import Proof from "./Proof";
 import { pains, advantages, modules, levelLabels, site, waLink, videos } from "../lib/site";
 
@@ -36,12 +36,12 @@ export function Problem() {
           </p>
         </Reveal>
         <div className="split" style={{ marginTop: 34 }}>
-          <Reveal>
-            <p style={{ fontSize: "clamp(19px,2.6vw,26px)", color: "var(--ink)", fontFamily: "var(--font-display)", letterSpacing: "-0.02em", margin: 0 }}>
-              Et pendant ce temps, à chaque achat, une partie de ta marge part chez{" "}
-              <span className="gold">quelqu&apos;un d&apos;autre.</span>
-            </p>
-          </Reveal>
+          <div>
+            <ScrollChars className="statement">
+              Et pendant ce temps, à chaque achat, une partie de ta marge part chez quelqu&apos;un
+              d&apos;autre.
+            </ScrollChars>
+          </div>
           <Reveal delay={0.1}>
             <Proof
               src="/images/acheteur-terrain.jpg"
@@ -286,9 +286,7 @@ export function Program() {
               className="btn btn-accent btn-lg"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-            >
-              Rejoindre le programme
-            </motion.a>
+            ><SwapText>Rejoindre le programme</SwapText></motion.a>
           </div>
         </Reveal>
       </div>
@@ -473,9 +471,7 @@ export function Videos() {
                 className="btn btn-ghost"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
-              >
-                ▶ Voir la chaîne
-              </motion.a>
+              ><SwapText>▶ Voir la chaîne</SwapText></motion.a>
             </div>
           </Reveal>
         </div>
@@ -605,9 +601,7 @@ export function FinalCta() {
             className="btn btn-primary btn-lg"
             whileHover={{ scale: 1.035, y: -2 }}
             whileTap={{ scale: 0.98 }}
-          >
-            JE COMMENCE MAINTENANT
-          </motion.a>
+          ><SwapText>Je commence maintenant</SwapText></motion.a>
           <p className="muted" style={{ marginTop: 18 }}>
             Une question avant de te décider ?{" "}
             <a href={waLink} target="_blank" rel="noreferrer" className="gold">

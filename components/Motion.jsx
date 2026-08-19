@@ -1,9 +1,17 @@
 "use client";
 
-import { motion, useInView, useMotionValue, useAnimationFrame } from "framer-motion";
+import {
+  motion,
+  useInView,
+  useMotionValue,
+  useAnimationFrame,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { useEffect, useRef } from "react";
+import { easeFramer } from "../lib/anim";
 
-export const ease = [0.16, 1, 0.3, 1];
+export const ease = easeFramer;
 
 /* Rich-text helper : **gras** -> <strong> */
 export function RT({ children, as: Tag = "p", className }) {
@@ -127,6 +135,48 @@ export function LineReveal({ children, delay = 0 }) {
         {children}
       </motion.span>
     </span>
+  );
+}
+
+/* Libellé qui glisse vers le haut au survol, la copie du bas prenant sa place.
+   C'est le couple « Top / Bottom » des boutons de la référence. */
+export function SwapText({ children, className }) {
+  return (
+    <span className={"swap " + (className || "")}>
+      <span className="swap-top">{children}</span>
+      <span className="swap-bottom" aria-hidden="true">
+        {children}
+      </span>
+    </span>
+  );
+}
+
+/* Texte révélé caractère par caractère AU SCROLL (les lettres s'allument
+   au fur et à mesure que la section traverse l'écran). */
+export function ScrollChars({ children, className, as: Tag = "p" }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 0.85", "start 0.25"],
+  });
+  const chars = Array.from(String(children));
+  const M = motion[Tag] || motion.p;
+
+  return (
+    <M ref={ref} className={className}>
+      {chars.map((c, i) => (
+        <ScrollChar key={i} progress={scrollYProgress} range={[i / chars.length, (i + 1) / chars.length]}>
+          {c}
+        </ScrollChar>
+      ))}
+    </M>
+  );
+}
+
+function ScrollChar({ children, progress, range }) {
+  const opacity = useTransform(progress, range, [0.18, 1]);
+  return (
+    <motion.span style={{ opacity, whiteSpace: "pre" }}>{children}</motion.span>
   );
 }
 

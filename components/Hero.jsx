@@ -2,7 +2,8 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { CharReveal, Marquee, ease } from "./Motion";
+import { CharReveal, Marquee, SwapText } from "./Motion";
+import { appear } from "../lib/anim";
 import Proof from "./Proof";
 
 const strip = [
@@ -27,9 +28,8 @@ export default function Hero() {
       <div className="wrap">
         <motion.div
           className="hero-top"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease }}
+          initial={appear.fromBottom(0.15).initial}
+          animate={appear.fromBottom(0.15).animate}
         >
           <span className="chip">
             <span className="status-dot" /> Formation filmée · Acheter en Chine toi-même
@@ -46,9 +46,8 @@ export default function Hero() {
 
         <motion.p
           className="hero-sub"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.15, ease }}
+          initial={appear.fromBottom(1).initial}
+          animate={appear.fromBottom(1).animate}
         >
           <strong>Elite Achat en Chine</strong> te montre — écran filmé, clic par clic — comment
           acheter toi-même en Chine. Sans parler chinois. Sans te faire arnaquer. Sans les erreurs
@@ -57,17 +56,11 @@ export default function Hero() {
 
         <motion.div
           className="hero-actions"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.3, ease }}
+          initial={appear.fromBottom(1.15).initial}
+          animate={appear.fromBottom(1.15).animate}
         >
-          <motion.a
-            href="#offres"
-            className="btn btn-accent btn-lg"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            Je veux acheter au vrai prix
+          <motion.a href="#offres" className="btn btn-accent btn-lg" whileTap={{ scale: 0.98 }}>
+            <SwapText>Je veux acheter au vrai prix</SwapText>
           </motion.a>
           <div className="price-tag">
             <span className="from">À partir de</span>
@@ -77,9 +70,8 @@ export default function Hero() {
 
         <motion.div
           className="reassure"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.45 }}
+          initial={appear.fromBottomSoft(1.4).initial}
+          animate={appear.fromBottomSoft(1.4).animate}
         >
           <span>Accès immédiat</span>
           <span>·</span>
@@ -90,9 +82,8 @@ export default function Hero() {
 
         <motion.div
           className="hero-grid"
-          initial={{ opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 1.5, ease }}
+          initial={appear.rise(1.3).initial}
+          animate={appear.rise(1.3).animate}
         >
           <div className="hero-side">
             <div className="quote-box">

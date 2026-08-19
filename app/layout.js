@@ -30,6 +30,11 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
+        {/* Sans JavaScript, les éléments animés resteraient invisibles */}
+        <noscript>
+          <style>{`.notch,.nav-inner,.hero-top,.hero-sub,.hero-actions,.reassure,.hero-grid,
+            .statement span,.mod-card,.tier,.adv,.pain{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
         <div className="noise" />
         {children}
       </body>

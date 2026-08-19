@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
-import { ease } from "./Motion";
+import { SwapText } from "./Motion";
+import { appear, tween, springContent } from "../lib/anim";
 import { waLink } from "../lib/site";
 
 const links = [
@@ -14,6 +15,19 @@ const links = [
   { href: "#faq", t: "FAQ" },
 ];
 
+function NavLink({ href, children, onClick }) {
+  return (
+    <motion.a href={href} className="nav-link" onClick={onClick} initial="rest" whileHover="hover" animate="rest">
+      <span>{children}</span>
+      <motion.span
+        className="nav-underline"
+        variants={{ rest: { opacity: 0, scaleX: 0.4 }, hover: { opacity: 1, scaleX: 1 } }}
+        transition={tween}
+      />
+    </motion.a>
+  );
+}
+
 export default function Nav() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 28, mass: 0.3 });
@@ -22,92 +36,96 @@ export default function Nav() {
   return (
     <>
       <motion.div className="progress-bar" style={{ scaleX }} />
-      <motion.header
-        className="nav"
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease, delay: 0.1 }}
-      >
+
+      <div className="nav">
         <div className="wrap">
-          <div className="nav-inner">
-            <a href="#top" className="logo" onClick={() => setOpen(false)}>
-              <span className="logo-dot" />
-              Elite Achat en Chine
-            </a>
+          {/* « Notch » : la pastille de statut, comme sur la référence */}
+          <motion.div className="notch" initial={appear.notch.initial} animate={appear.notch.animate}>
+            <span className="status-dot" />
+            Accès immédiat · Accès à vie · Garantie 7 jours
+          </motion.div>
+
+          <motion.header
+            className={"nav-inner" + (open ? " is-open" : "")}
+            initial={appear.header.initial}
+            animate={appear.header.animate}
+            layout
+            transition={springContent}
+          >
+            <motion.div className="nav-bar" layout="position">
+              <a href="#top" className="logo" onClick={() => setOpen(false)}>
+                <span className="logo-dot" />
+                Elite Achat en Chine
+              </a>
+
+              <button
+                className="nav-burger"
+                onClick={() => setOpen((v) => !v)}
+                aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+                aria-expanded={open}
+              >
+                <motion.span animate={open ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }} transition={tween} />
+                <motion.span animate={open ? { opacity: 0 } : { opacity: 1 }} transition={{ duration: 0.2 }} />
+                <motion.span animate={open ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }} transition={tween} />
+              </button>
+            </motion.div>
 
             <nav className="nav-links">
               {links.map((l) => (
-                <a key={l.href} href={l.href}>
+                <NavLink key={l.href} href={l.href}>
                   {l.t}
-                </a>
+                </NavLink>
               ))}
             </nav>
 
-            <span className="status">
-              <span className="status-dot" /> Accès immédiat
-            </span>
-
-            <motion.a
-              href="#offres"
-              className="btn btn-primary nav-cta"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              Voir les niveaux
+            <motion.a href="#offres" className="btn btn-primary nav-cta" whileTap={{ scale: 0.97 }}>
+              <SwapText>Voir les niveaux</SwapText>
             </motion.a>
 
-            <button
-              className="nav-burger"
-              onClick={() => setOpen((v) => !v)}
-              aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-              aria-expanded={open}
-            >
-              <motion.span animate={open ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }} transition={{ duration: 0.25, ease }} />
-              <motion.span animate={open ? { opacity: 0 } : { opacity: 1 }} transition={{ duration: 0.2 }} />
-              <motion.span animate={open ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }} transition={{ duration: 0.25, ease }} />
-            </button>
-          </div>
-
-          <AnimatePresence>
-            {open ? (
-              <motion.div
-                className="nav-panel"
-                initial={{ opacity: 0, y: -12, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -12, scale: 0.98 }}
-                transition={{ duration: 0.32, ease }}
-              >
-                {links.map((l, i) => (
-                  <motion.a
-                    key={l.href}
-                    href={l.href}
-                    onClick={() => setOpen(false)}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: 0.04 * i, ease }}
-                  >
-                    {l.t}
-                  </motion.a>
-                ))}
-                <div className="nav-panel-foot">
-                  <a href="#offres" className="btn btn-accent btn-block" onClick={() => setOpen(false)}>
-                    Voir les niveaux
-                  </a>
-                  <a
-                    href={waLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn btn-ghost btn-block"
-                    onClick={() => setOpen(false)}
-                  >
-                    Écris-moi sur WhatsApp
-                  </a>
-                </div>
-              </motion.div>
-            ) : null}
-          </AnimatePresence>
+            {/* Sur mobile, l'en-tête s'agrandit sur place : les liens se
+                empilent dessous, comme la variante « ouverte » de la référence. */}
+            <AnimatePresence initial={false}>
+              {open ? (
+                <motion.div
+                  className="nav-drop"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1, transition: { ...springContent } }}
+                  exit={{ height: 0, opacity: 0, transition: { duration: 0.22, ease: tween.ease } }}
+                >
+                  <div className="nav-drop-inner">
+                    {links.map((l, i) => (
+                      <motion.a
+                        key={l.href}
+                        href={l.href}
+                        onClick={() => setOpen(false)}
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ ...tween, delay: 0.05 + i * 0.045 }}
+                      >
+                        {l.t}
+                      </motion.a>
+                    ))}
+                    <div className="nav-drop-foot">
+                      <a href="#offres" className="btn btn-accent btn-block" onClick={() => setOpen(false)}>
+                        Voir les niveaux
+                      </a>
+                      <a
+                        href={waLink}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="btn btn-ghost btn-block"
+                        onClick={() => setOpen(false)}
+                      >
+                        Écris-moi sur WhatsApp
+                      </a>
+                    </div>
+                  </div>
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
+          </motion.header>
         </div>
-      </motion.header>
+      </div>
     </>
   );
 }
