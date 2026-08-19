@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Reveal, Stagger, Item, Counter, ease } from "./Motion";
+import { useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Reveal, Stagger, Item, Counter, Marquee, ease } from "./Motion";
 import Proof from "./Proof";
 import { pains, advantages, modules, levelLabels, site, waLink, videos } from "../lib/site";
 
@@ -161,56 +162,132 @@ export function Solution() {
 /* ---------------- SECTION 5 — LE PROGRAMME ---------------- */
 
 export function Program() {
-  const groups = [
-    { key: "all", label: null, list: modules.filter((m) => m.level === "all") },
-    { key: "digital", label: levelLabels.digital, list: modules.filter((m) => m.level === "digital") },
-    { key: "pro", label: levelLabels.pro, list: modules.filter((m) => m.level === "pro") },
-  ];
+  const railRef = useRef(null);
+  const [open, setOpen] = useState(null);
+
+  const scrollBy = (dir) => {
+    const el = railRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * Math.min(el.clientWidth * 0.8, 460), behavior: "smooth" });
+  };
+
+  const current = open === null ? null : modules[open];
 
   return (
     <section id="programme" className="section-alt">
-      <div className="wrap" style={{ maxWidth: 960 }}>
-        <Reveal>
-          <span className="eyebrow">Le programme</span>
-        </Reveal>
-        <Reveal delay={0.08}>
-          <h2 style={{ margin: "22px 0 40px" }}>Tout ce que tu vas savoir faire</h2>
-        </Reveal>
+      <div className="wrap">
+        <div className="rail-head">
+          <div>
+            <Reveal>
+              <span className="eyebrow">Le programme</span>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <h2 style={{ margin: "22px 0 10px" }}>Tout ce que tu vas savoir faire</h2>
+            </Reveal>
+            <Reveal delay={0.12}>
+              <p className="muted" style={{ margin: 0 }}>
+                Fais défiler les modules · clique sur un module pour voir ce qu&apos;il contient
+              </p>
+            </Reveal>
+          </div>
+          <Reveal delay={0.14}>
+            <div className="rail-arrows">
+              <button onClick={() => scrollBy(-1)} aria-label="Modules précédents">
+                ←
+              </button>
+              <button onClick={() => scrollBy(1)} aria-label="Modules suivants">
+                →
+              </button>
+            </div>
+          </Reveal>
+        </div>
+      </div>
 
-        {groups.map((g) => (
-          <div className="mod-group" key={g.key}>
-            {g.label ? (
-              <Reveal>
-                <div className="mod-group-title">→ {g.label}</div>
-              </Reveal>
-            ) : null}
-            <Stagger gap={0.05}>
-              {g.list.map((m) => (
-                <Item key={m.n + m.t}>
-                  <motion.div
-                    className="mod"
-                    whileHover={{ x: 6, borderColor: "rgba(231,183,87,0.35)", backgroundColor: "rgba(231,183,87,0.05)" }}
+      <div className="rail" ref={railRef}>
+        <div className="rail-inner">
+          {modules.map((m, i) => {
+            const isOpen = open === i;
+            return (
+              <motion.button
+                key={m.n + m.t}
+                className={"mod-card" + (isOpen ? " is-open" : "")}
+                onClick={() => setOpen(isOpen ? null : i)}
+                aria-expanded={isOpen}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.55, delay: Math.min(i * 0.04, 0.3), ease }}
+                whileHover={{ y: -4 }}
+              >
+                <span className="lvl">{levelLabels[m.level]}</span>
+                <span className="n">{m.n}</span>
+                <span className="t">{m.t}</span>
+                <span className="foot">
+                  {m.v ? <span className="v">{m.v}</span> : <span />}
+                  <motion.span
+                    className="plus"
+                    animate={{ rotate: isOpen ? 45 : 0 }}
                     transition={{ duration: 0.25, ease }}
                   >
-                    <span className="n">{m.n}</span>
-                    <span className="t">{m.t}</span>
-                    {m.v ? <span className="v">{m.v}</span> : null}
-                  </motion.div>
-                </Item>
-              ))}
-            </Stagger>
-          </div>
-        ))}
+                    +
+                  </motion.span>
+                </span>
+              </motion.button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="wrap">
+        <AnimatePresence initial={false} mode="wait">
+          {current ? (
+            <motion.div
+              key={current.n}
+              className="mod-detail"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1, transition: { duration: 0.4, ease } }}
+              exit={{ height: 0, opacity: 0, transition: { duration: 0.2, ease } }}
+            >
+              <div className="mod-detail-inner">
+                <div className="mod-detail-head">
+                  <div>
+                    <span className="n">{current.n}</span>
+                    <h3>{current.t}</h3>
+                  </div>
+                  <button onClick={() => setOpen(null)} aria-label="Fermer le module">
+                    ✕
+                  </button>
+                </div>
+                <ul>
+                  {(current.points || []).map((p, k) => (
+                    <motion.li
+                      key={k}
+                      initial={{ opacity: 0, x: -12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.4, delay: 0.06 * k, ease }}
+                    >
+                      <span className="c">✓</span> {p}
+                    </motion.li>
+                  ))}
+                </ul>
+                <p className="muted" style={{ margin: 0 }}>
+                  {levelLabels[current.level]}
+                  {current.v ? ` · ${current.v}` : ""}
+                </p>
+              </div>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
 
         <Reveal delay={0.1}>
           <div style={{ textAlign: "center", marginTop: 44 }}>
             <motion.a
               href="#offres"
-              className="btn btn-primary btn-lg"
-              whileHover={{ scale: 1.035, y: -2 }}
+              className="btn btn-accent btn-lg"
+              whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
             >
-              REJOINDRE LE PROGRAMME
+              Rejoindre le programme
             </motion.a>
           </div>
         </Reveal>
@@ -403,34 +480,30 @@ export function Videos() {
           </Reveal>
         </div>
 
-        <Stagger className="video-grid" gap={0.06}>
+      </div>
+
+      <div className="video-rail">
+        <Marquee speed={38} direction={1} gap={16}>
           {videos.map((v) => (
-            <Item key={v.id}>
-              <motion.a
-                className="video-card"
-                href={`https://www.youtube.com/watch?v=${v.id}`}
-                target="_blank"
-                rel="noreferrer"
-                whileHover={{ y: -6, borderColor: "rgba(231,183,87,0.4)" }}
-                transition={{ duration: 0.3, ease }}
-              >
-                <div className="video-thumb">
-                  <motion.img
-                    src={`/youtube/${v.id}.jpg`}
-                    alt={v.t}
-                    loading="lazy"
-                    whileHover={{ scale: 1.06 }}
-                    transition={{ duration: 0.5, ease }}
-                  />
-                  <div className="video-play">
-                    <span>▶</span>
-                  </div>
+            <motion.a
+              key={v.id}
+              className="video-card"
+              href={`https://www.youtube.com/watch?v=${v.id}`}
+              target="_blank"
+              rel="noreferrer"
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.3, ease }}
+            >
+              <div className="video-thumb">
+                <img src={`/youtube/${v.id}.jpg`} alt={v.t} loading="lazy" />
+                <div className="video-play">
+                  <span>▶</span>
                 </div>
-                <div className="meta">{v.t}</div>
-              </motion.a>
-            </Item>
+              </div>
+              <div className="meta">{v.t}</div>
+            </motion.a>
           ))}
-        </Stagger>
+        </Marquee>
       </div>
     </section>
   );
@@ -445,7 +518,6 @@ export function Testimonials() {
     { file: "temoignage-3.jpg", label: "Témoignage WhatsApp 3" },
     { file: "temoignage-4.jpg", label: "Témoignage WhatsApp 4" },
   ];
-  const track = [...shots, ...shots];
 
   return (
     <section>
@@ -463,19 +535,13 @@ export function Testimonials() {
         </Reveal>
       </div>
 
-      <div className="marquee">
-        <motion.div
-          className="marquee-track"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 34, repeat: Infinity, ease: "linear" }}
-        >
-          {track.map((s, i) => (
-            <div className="testi" key={i}>
-              <Proof file={s.file} label={s.label} ratio="9 / 16" />
-            </div>
-          ))}
-        </motion.div>
-      </div>
+      <Marquee speed={28} direction={-1} gap={16}>
+        {shots.map((s, i) => (
+          <div className="testi" key={i}>
+            <Proof file={s.file} label={s.label} ratio="9 / 16" />
+          </div>
+        ))}
+      </Marquee>
     </section>
   );
 }

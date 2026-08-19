@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion, useInView, useMotionValue, useAnimationFrame } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 export const ease = [0.16, 1, 0.3, 1];
 
@@ -127,6 +127,55 @@ export function LineReveal({ children, delay = 0 }) {
         {children}
       </motion.span>
     </span>
+  );
+}
+
+/* Bandeau défilant en continu. direction: 1 = vers la droite, -1 = vers la gauche.
+   Se met en pause au survol et pendant qu'on le fait glisser à la main. */
+export function Marquee({ children, speed = 40, direction = 1, className, gap = 16 }) {
+  const setRef = useRef(null);
+  const x = useMotionValue(0);
+  const paused = useRef(false);
+  const width = useRef(0);
+
+  useEffect(() => {
+    const measure = () => {
+      if (setRef.current) width.current = setRef.current.offsetWidth + gap;
+      if (direction > 0 && x.get() === 0) x.set(-width.current);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (setRef.current) ro.observe(setRef.current);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [direction, gap, x]);
+
+  useAnimationFrame((_, delta) => {
+    if (paused.current || !width.current) return;
+    let next = x.get() + (delta / 1000) * speed * direction;
+    if (next >= 0) next -= width.current;
+    if (next <= -width.current) next += width.current;
+    x.set(next);
+  });
+
+  return (
+    <div
+      className={"marquee " + (className || "")}
+      onPointerEnter={() => (paused.current = true)}
+      onPointerLeave={() => (paused.current = false)}
+    >
+      <motion.div className="marquee-track" style={{ x, gap }}>
+        <div className="marquee-set" ref={setRef} style={{ gap }}>
+          {children}
+        </div>
+        <div className="marquee-set" aria-hidden="true" style={{ gap }}>
+          {children}
+        </div>
+      </motion.div>
+    </div>
   );
 }
 

@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { CharReveal, ease } from "./Motion";
+import { CharReveal, Marquee, ease } from "./Motion";
 import Proof from "./Proof";
 
 const strip = [
@@ -120,19 +120,13 @@ export default function Hero() {
       </div>
 
       <div className="strip">
-        <div className="marquee">
-          <motion.div
-            className="marquee-track"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 26, repeat: Infinity, ease: "linear" }}
-          >
-            {[...strip, ...strip].map((s, i) => (
-              <span className="strip-item" key={i}>
-                {s}
-              </span>
-            ))}
-          </motion.div>
-        </div>
+        <Marquee speed={45} direction={-1} gap={18}>
+          {strip.map((s) => (
+            <span className="strip-item" key={s}>
+              {s}
+            </span>
+          ))}
+        </Marquee>
       </div>
     </section>
   );
