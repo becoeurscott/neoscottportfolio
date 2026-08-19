@@ -484,16 +484,13 @@ export function Testimonials() {
 
 export function FinalCta() {
   return (
-    <section className="final">
-      <motion.div
-        className="glow"
-        style={{ width: 700, height: 700, left: "50%", top: "10%", x: "-50%", background: "rgba(231,183,87,0.16)" }}
-        animate={{ scale: [1, 1.15, 1], opacity: [0.55, 0.9, 0.55] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      />
+    <section className="final section-dark">
       <div className="wrap final-inner">
         <Reveal>
-          <div className="season">🗓️ Septembre → Décembre : la meilleure période de l&apos;année</div>
+          <div className="season">
+            <span className="status-dot" /> Septembre → Décembre : la meilleure période de
+            l&apos;année
+          </div>
         </Reveal>
         <Reveal delay={0.08}>
           <h2>

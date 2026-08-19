@@ -77,6 +77,43 @@ export function Item({ children, className, style }) {
   );
 }
 
+/* Titre révélé caractère par caractère — l'animation signature de la référence */
+export function CharReveal({ children, delay = 0, step = 0.018, className }) {
+  const text = String(children);
+  // On découpe en mots (espaces conservés) pour que les mots ne se coupent jamais en fin de ligne
+  const chunks = [];
+  let index = 0;
+  for (const word of text.split(/(\s+)/)) {
+    if (word === "") continue;
+    chunks.push({ word, start: index, space: /^\s+$/.test(word) });
+    index += word.length;
+  }
+
+  return (
+    <span className={className} aria-label={text}>
+      {chunks.map((chunk, wi) =>
+        chunk.space ? (
+          <span key={wi}> </span>
+        ) : (
+          <span key={wi} style={{ display: "inline-block", whiteSpace: "nowrap" }} aria-hidden="true">
+            {Array.from(chunk.word).map((c, ci) => (
+              <motion.span
+                key={ci}
+                style={{ display: "inline-block" }}
+                initial={{ opacity: 0, y: "0.42em", filter: "blur(6px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.6, delay: delay + (chunk.start + ci) * step, ease }}
+              >
+                {c}
+              </motion.span>
+            ))}
+          </span>
+        )
+      )}
+    </span>
+  );
+}
+
 /* Titre révélé ligne par ligne (masque + translation) */
 export function LineReveal({ children, delay = 0 }) {
   return (
