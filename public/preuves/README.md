@@ -20,7 +20,7 @@ remplacé automatiquement par l'image dès qu'elle est présente.
 | `eleve-solo.jpg` | Niveau Solo Coach Expert |
 | `precommande-reussie.jpg` | Niveau Elite Digital |
 | `eleve-avance.jpg` | Niveau Elite Digital Pro |
-| `temoignage-1.jpg` … `temoignage-4.jpg` | Section témoignages (défilement) |
+| `temoignage-1.jpg` … `temoignage-6.jpg` | Rail témoignages (défilement auto) |
 | `preuve-finale.jpg` | CTA final, à côté de ta photo |
 
 Rappel : sur les captures WhatsApp, floute **nom de famille, numéro et photo**. Laisse

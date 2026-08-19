@@ -517,7 +517,11 @@ export function Testimonials() {
     { file: "temoignage-2.jpg", label: "Témoignage WhatsApp 2" },
     { file: "temoignage-3.jpg", label: "Témoignage WhatsApp 3" },
     { file: "temoignage-4.jpg", label: "Témoignage WhatsApp 4" },
+    { file: "temoignage-5.jpg", label: "Témoignage WhatsApp 5" },
+    { file: "temoignage-6.jpg", label: "Témoignage WhatsApp 6" },
   ];
+  // On répète la série pour que le rail reste plein sur les grands écrans
+  const rail = [...shots, ...shots];
 
   return (
     <section>
@@ -535,13 +539,20 @@ export function Testimonials() {
         </Reveal>
       </div>
 
-      <Marquee speed={28} direction={-1} gap={16}>
-        {shots.map((s, i) => (
-          <div className="testi" key={i}>
-            <Proof file={s.file} label={s.label} ratio="9 / 16" />
-          </div>
-        ))}
-      </Marquee>
+      <div className="testi-rail">
+        <Marquee speed={38} direction={1} gap={16}>
+          {rail.map((s, i) => (
+            <motion.div
+              className="testi-card"
+              key={i}
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.3, ease }}
+            >
+              <Proof file={s.file} label={s.label} ratio="9 / 16" />
+            </motion.div>
+          ))}
+        </Marquee>
+      </div>
     </section>
   );
 }

@@ -1299,6 +1299,29 @@ b {
 
 /* ---------- témoignages ---------- */
 
+.testi-rail {
+  margin-top: 40px;
+}
+
+.testi-card {
+  width: 290px;
+  flex: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  padding: 10px;
+}
+
+.testi-card .proof,
+.testi-card .proof-ph {
+  border-radius: var(--radius-sm);
+  min-height: 0;
+}
+
+.testi-card .proof-cap {
+  padding: 0 6px 4px;
+}
+
 .testi {
   width: 290px;
   flex: none;
