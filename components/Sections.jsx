@@ -362,13 +362,13 @@ export function About() {
             <Stagger className="stat-row" gap={0.09}>
               <Item className="stat">
                 <div className="v">
-                  <Counter to={3000000} /> F
+                  <Counter to={2923523} /> F
                 </div>
                 <div className="l">sur Chariow</div>
               </Item>
               <Item className="stat">
                 <div className="v">
-                  <Counter to={600000} /> F
+                  <Counter to={984096} /> F
                 </div>
                 <div className="l">sur Maketou</div>
               </Item>
@@ -415,12 +415,12 @@ export function About() {
 
         <Stagger className="adv-grid" gap={0.08} delay={0.1}>
           {[
-            { file: "dashboard-chariow.jpg", label: "Dashboard Chariow", cap: "3 000 000 F sur Chariow" },
-            { file: "dashboard-maketou.jpg", label: "Dashboard Maketou", cap: "600 000 F sur Maketou" },
-            { file: "commande-604000.jpg", label: "La commande à 604 000 F", cap: "Commande client — 604 000 F" },
+            { file: "dashboard-chariow.jpg", label: "Dashboard Chariow", cap: "Chariow — 2 923 523 F de ventes, 897 clients", ratio: "16 / 9" },
+            { file: "dashboard-maketou.jpg", label: "Dashboard MakeTou", cap: "MakeTou — 984 096 F de revenus, 47 commandes", ratio: "16 / 9" },
+            { file: "commande-604000.jpg", label: "La commande à 604 000 F", cap: "Commande client — 604 000 F", ratio: "16 / 9" },
           ].map((p, i) => (
             <Item key={p.file}>
-              <Proof file={p.file} label={p.label} caption={p.cap} ratio="4 / 5" tilt={i % 2 ? 1 : -1} />
+              <Proof file={p.file} label={p.label} caption={p.cap} ratio={p.ratio} tilt={i % 2 ? 1 : -1} />
             </Item>
           ))}
           <Item>

@@ -9,14 +9,14 @@ remplacé automatiquement par l'image dès qu'elle est présente.
 |---|---|
 | `colis-recus.jpg` | Hero — suivi de colis Trasy jusqu'à Douala |
 | `pinduoduo-prix.jpg` | Section « La solution » — les vrais prix sur la plateforme chinoise |
+| `dashboard-chariow.jpg` | Preuves « Qui suis-je » — 2 923 523 F sur Chariow |
+| `dashboard-maketou.jpg` | Preuves « Qui suis-je » — 984 096 F sur MakeTou |
 
 ## ⬜ Encore à fournir
 
 | Fichier | Où il apparaît |
 |---|---|
 | `commande-604000.jpg` | Preuves « Qui suis-je » — la commande à 604 000 F |
-| `dashboard-chariow.jpg` | Preuves — 3 000 000 F sur Chariow |
-| `dashboard-maketou.jpg` | Preuves — 600 000 F sur Maketou |
 | `eleve-solo.jpg` | Niveau Solo Coach Expert |
 | `precommande-reussie.jpg` | Niveau Elite Digital |
 | `eleve-avance.jpg` | Niveau Elite Digital Pro |
