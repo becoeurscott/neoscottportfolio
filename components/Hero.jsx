@@ -6,15 +6,13 @@ import { CharReveal, Marquee, SwapText } from "./Motion";
 import { appear } from "../lib/anim";
 import Proof from "./Proof";
 
+/* Logos des plateformes couvertes par la formation (dossier /public/logos) */
 const strip = [
-  "Pinduoduo",
-  "Taobao",
-  "1688",
-  "Alipay",
-  "WeChat",
-  "Transitaires",
-  "Précommandes",
-  "Douane",
+  { src: "/logos/pinduoduo.png", alt: "Pinduoduo" },
+  { src: "/logos/taobao.png", alt: "Taobao" },
+  { src: "/logos/1688.png", alt: "1688" },
+  { src: "/logos/alipay.png", alt: "Alipay" },
+  { src: "/logos/wechat.png", alt: "WeChat" },
 ];
 
 export default function Hero() {
@@ -22,9 +20,21 @@ export default function Hero() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const yA = useTransform(scrollYProgress, [0, 1], [0, -60]);
   const yB = useTransform(scrollYProgress, [0, 1], [0, 40]);
+  const yCutout = useTransform(scrollYProgress, [0, 1], [0, -120]);
 
   return (
     <section className="hero" id="top" ref={ref}>
+      {/* Découpe détourée, calée juste sous la barre de navigation */}
+      <motion.img
+        className="hero-cutout"
+        src="/images/neo-cutout.webp"
+        alt=""
+        aria-hidden="true"
+        initial={appear.rise(0.35).initial}
+        animate={appear.rise(0.35).animate}
+        style={{ y: yCutout }}
+      />
+
       <div className="wrap">
         <motion.div
           className="hero-top"
@@ -85,36 +95,31 @@ export default function Hero() {
           initial={appear.rise(1.3).initial}
           animate={appear.rise(1.3).animate}
         >
-          <div className="hero-side">
-            <div className="quote-box">
-              <div className="big">
-                Hier : une commande client de 604 000 F. Ma marge : plus de 150 000 F.
-              </div>
-              <p style={{ margin: 0, fontSize: 16 }}>
-                Sans avoir avancé un seul franc — c&apos;est le client qui paie d&apos;abord.
-              </p>
+          <motion.div className="quote-box" style={{ y: yA }}>
+            <div className="big">
+              Hier : une commande client de 604 000 F. Ma marge : plus de 150 000 F.
             </div>
-            <motion.div style={{ y: yB }}>
-              <Proof
-                file="colis-recus.jpg"
-                label="Suivi de colis — Douala"
-                caption="Colis suivi jusqu'à Douala, sans intermédiaire"
-                ratio="4 / 3"
-              />
-            </motion.div>
-          </div>
+            <p style={{ margin: 0, fontSize: 16 }}>
+              Sans avoir avancé un seul franc — c&apos;est le client qui paie d&apos;abord.
+            </p>
+          </motion.div>
 
-          <motion.div style={{ y: yA }}>
-            <Proof src="/images/neo-portrait.jpg" label="Neo Scott" ratio="4 / 5" />
+          <motion.div style={{ y: yB }}>
+            <Proof
+              file="colis-recus.jpg"
+              label="Suivi de colis — Douala"
+              caption="Colis suivi jusqu'à Douala, sans intermédiaire"
+              ratio="16 / 10"
+            />
           </motion.div>
         </motion.div>
       </div>
 
       <div className="strip">
-        <Marquee speed={45} direction={-1} gap={18}>
+        <Marquee speed={45} direction={-1} gap={14}>
           {strip.map((s) => (
-            <span className="strip-item" key={s}>
-              {s}
+            <span className="strip-logo" key={s.src}>
+              <img src={s.src} alt={s.alt} loading="lazy" />
             </span>
           ))}
         </Marquee>
