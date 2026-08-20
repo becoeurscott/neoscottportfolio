@@ -3,6 +3,7 @@ import Hero from "../components/Hero";
 import Pricing from "../components/Pricing";
 import Faq from "../components/Faq";
 import StickyCta from "../components/StickyCta";
+import VideoTestimonials from "../components/VideoTestimonials";
 import {
   Problem,
   Pains,
@@ -26,6 +27,7 @@ export default function Page() {
         <Pains />
         <Solution />
         <Program />
+        <VideoTestimonials />
         <Pricing />
         <WhyCheap />
         <About />
