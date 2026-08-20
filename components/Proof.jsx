@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ease } from "./Motion";
 
@@ -22,7 +23,10 @@ export default function Proof({
 }) {
   const [failed, setFailed] = useState(false);
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const src = srcProp || `/preuves/${file}`;
+
+  useEffect(() => setMounted(true), []);
 
   // Échap pour fermer, et on bloque le défilement pendant la vue agrandie
   useEffect(() => {
@@ -94,34 +98,42 @@ export default function Proof({
         ) : null}
       </motion.figure>
 
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            className="lightbox"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25, ease }}
-            onClick={() => setOpen(false)}
-          >
-            <motion.img
-              src={src}
-              alt={label}
-              initial={{ scale: 0.94, y: 14 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.96, y: 8 }}
-              transition={{ duration: 0.35, ease }}
-              onClick={(e) => e.stopPropagation()}
-            />
-            <div className="lightbox-bar" onClick={(e) => e.stopPropagation()}>
-              <span>{caption || label}</span>
-              <button onClick={() => setOpen(false)} aria-label="Fermer">
-                ✕
-              </button>
-            </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+      {/* La vue agrandie est montée sur <body> : dans un parent avec transform
+          (le rail défilant), un position:fixed se cale sur ce parent et
+          l'image partait hors écran. */}
+      {mounted
+        ? createPortal(
+            <AnimatePresence>
+              {open ? (
+                <motion.div
+                  className="lightbox"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25, ease }}
+                  onClick={() => setOpen(false)}
+                >
+                  <motion.img
+                    src={src}
+                    alt={label}
+                    initial={{ scale: 0.94, y: 14 }}
+                    animate={{ scale: 1, y: 0 }}
+                    exit={{ scale: 0.96, y: 8 }}
+                    transition={{ duration: 0.35, ease }}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                  <div className="lightbox-bar" onClick={(e) => e.stopPropagation()}>
+                    <span>{caption || label}</span>
+                    <button onClick={() => setOpen(false)} aria-label="Fermer">
+                      ✕
+                    </button>
+                  </div>
+                </motion.div>
+              ) : null}
+            </AnimatePresence>,
+            document.body
+          )
+        : null}
     </>
   );
 }
