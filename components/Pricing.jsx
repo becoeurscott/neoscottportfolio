@@ -40,6 +40,15 @@ export default function Pricing() {
             >
               {t.badge ? <div className="tier-badge">{t.badge}</div> : null}
 
+              {t.cover ? (
+                <Proof
+                  className="tier-cover"
+                  src={t.cover.src}
+                  label={t.cover.label}
+                  ratio="3 / 2"
+                />
+              ) : null}
+
               <div className="name">
                 <span>{t.emoji}</span> {t.name}
               </div>
@@ -78,12 +87,6 @@ export default function Pricing() {
               </ul>
 
               <div className="calc">{t.calc}</div>
-
-              {t.proof ? (
-                <div style={{ marginBottom: 20 }}>
-                  <Proof file={t.proof.file} label={t.proof.label} ratio="4 / 3" />
-                </div>
-              ) : null}
 
               <div className="tier-foot">
                 <motion.a

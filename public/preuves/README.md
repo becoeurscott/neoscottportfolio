@@ -11,16 +11,13 @@ remplacé automatiquement par l'image dès qu'elle est présente.
 | `pinduoduo-prix.jpg` | Section « La solution » — les vrais prix sur la plateforme chinoise |
 | `dashboard-chariow.jpg` | Preuves « Qui suis-je » — 2 923 523 F sur Chariow |
 | `dashboard-maketou.jpg` | Preuves « Qui suis-je » — 984 096 F sur MakeTou |
+| `commande-604000.jpg` | Preuves — les deux virements (500 000 + 104 000 F) |
+| `temoignage-1.jpg` … `temoignage-7.jpg` | Rail témoignages (défilement auto) |
 
 ## ⬜ Encore à fournir
 
 | Fichier | Où il apparaît |
 |---|---|
-| `commande-604000.jpg` | Preuves « Qui suis-je » — la commande à 604 000 F |
-| `eleve-solo.jpg` | Niveau Solo Coach Expert |
-| `precommande-reussie.jpg` | Niveau Elite Digital |
-| `eleve-avance.jpg` | Niveau Elite Digital Pro |
-| `temoignage-1.jpg` … `temoignage-6.jpg` | Rail témoignages (défilement auto) |
 | `preuve-finale.jpg` | CTA final, à côté de ta photo |
 
 Rappel : sur les captures WhatsApp, floute **nom de famille, numéro et photo**. Laisse

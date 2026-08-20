@@ -1394,6 +1394,17 @@ b {
   white-space: nowrap;
 }
 
+/* Visuel du niveau, en tête de carte, bord à bord */
+.tier-cover {
+  margin: -40px -30px 24px !important;
+}
+
+.tier-cover .proof {
+  border: 0;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: #0a0a0a;
+}
+
 .tier .name {
   font-size: 15px;
   color: var(--ink-2);
