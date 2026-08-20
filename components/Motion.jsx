@@ -159,25 +159,50 @@ export function ScrollChars({ children, className, as: Tag = "p" }) {
     target: ref,
     offset: ["start 0.85", "start 0.25"],
   });
-  const chars = Array.from(String(children));
+  const text = String(children);
+  const total = text.length;
   const M = motion[Tag] || motion.p;
+
+  // Découpage en mots : sans ça, chaque caractère devient un inline-block
+  // insécable et la phrase ne peut plus revenir à la ligne (elle pousse
+  // alors sa colonne de grille et écrase ce qu'il y a à côté).
+  const words = [];
+  let index = 0;
+  for (const part of text.split(/(\s+)/)) {
+    if (part === "") continue;
+    words.push({ part, start: index, space: /^\s+$/.test(part) });
+    index += part.length;
+  }
 
   return (
     <M ref={ref} className={className}>
-      {chars.map((c, i) => (
-        <ScrollChar key={i} progress={scrollYProgress} range={[i / chars.length, (i + 1) / chars.length]}>
-          {c}
-        </ScrollChar>
-      ))}
+      {words.map((w, wi) =>
+        w.space ? (
+          " "
+        ) : (
+          <span key={wi} style={{ display: "inline-block", whiteSpace: "nowrap" }}>
+            {Array.from(w.part).map((c, ci) => {
+              const i = w.start + ci;
+              return (
+                <ScrollChar
+                  key={ci}
+                  progress={scrollYProgress}
+                  range={[i / total, (i + 1) / total]}
+                >
+                  {c}
+                </ScrollChar>
+              );
+            })}
+          </span>
+        )
+      )}
     </M>
   );
 }
 
 function ScrollChar({ children, progress, range }) {
   const opacity = useTransform(progress, range, [0.18, 1]);
-  return (
-    <motion.span style={{ opacity, whiteSpace: "pre" }}>{children}</motion.span>
-  );
+  return <motion.span style={{ opacity, display: "inline-block" }}>{children}</motion.span>;
 }
 
 /* Bandeau défilant en continu. direction: 1 = vers la droite, -1 = vers la gauche.

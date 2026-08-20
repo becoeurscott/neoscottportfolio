@@ -44,9 +44,10 @@ export function Problem() {
           </div>
           <Reveal delay={0.1}>
             <Proof
-              src="/images/acheteur-terrain.jpg"
-              label="Acheter depuis son téléphone"
-              ratio="4 / 3"
+              src="/images/pinduoduo-banner.jpg"
+              label="Pinduoduo, la plateforme où achètent les Chinois"
+              caption="Pinduoduo — la plateforme où les Chinois achètent eux-mêmes"
+              ratio="16 / 10"
               tilt={1.2}
             />
           </Reveal>
