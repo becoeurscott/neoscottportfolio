@@ -564,11 +564,16 @@ b {
   overflow: hidden;
 }
 
-/* Découpe détourée : absolue, calée juste sous l'en-tête, dans la largeur du contenu */
+.hero-copy {
+  position: relative;
+}
+
+/* Découpe détourée : sur grand écran, calée juste sous l'en-tête,
+   au bord droit du contenu */
 .hero-cutout {
   position: absolute;
-  top: 126px;
-  right: max(20px, calc((100vw - var(--maxw)) / 2 + 10px));
+  top: -22px;
+  right: 0;
   width: min(430px, 34vw);
   height: auto;
   z-index: 0;
@@ -604,14 +609,26 @@ b {
   }
 }
 
-/* Sous 900px, la découpe passe en fond discret */
+/* Sous 900px : la découpe descend à la fin du texte et passe DEVANT,
+   en le chevauchant légèrement */
 @media (max-width: 900px) {
   .hero-cutout {
-    top: 132px;
-    right: 50%;
-    translate: 50% 0;
-    width: min(420px, 74vw);
-    opacity: 0.16;
+    position: relative;
+    top: auto;
+    right: auto;
+    display: block;
+    width: min(340px, 68vw);
+    margin: -16px auto -26px;
+    z-index: 3;
+    opacity: 1;
+    -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+  }
+
+  /* le texte passe dessous, la découpe le recouvre juste sur la fin */
+  .hero .wrap .reassure {
+    position: relative;
+    z-index: 1;
   }
 }
 

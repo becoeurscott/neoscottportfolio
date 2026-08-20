@@ -24,18 +24,8 @@ export default function Hero() {
 
   return (
     <section className="hero" id="top" ref={ref}>
-      {/* Découpe détourée, calée juste sous la barre de navigation */}
-      <motion.img
-        className="hero-cutout"
-        src="/images/neo-cutout.webp"
-        alt=""
-        aria-hidden="true"
-        initial={appear.rise(0.35).initial}
-        animate={appear.rise(0.35).animate}
-        style={{ y: yCutout }}
-      />
-
       <div className="wrap">
+        <div className="hero-copy">
         <motion.div
           className="hero-top"
           initial={appear.fromBottom(0.15).initial}
@@ -89,6 +79,19 @@ export default function Hero() {
           <span>·</span>
           <span>Garantie 7 jours</span>
         </motion.div>
+
+        {/* Découpe détourée : sous l'en-tête à droite sur grand écran,
+            devant la fin du texte sur mobile */}
+        <motion.img
+          className="hero-cutout"
+          src="/images/neo-cutout.webp"
+          alt=""
+          aria-hidden="true"
+          initial={appear.rise(0.35).initial}
+          animate={appear.rise(0.35).animate}
+          style={{ y: yCutout }}
+        />
+        </div>
 
         <motion.div
           className="hero-grid"
