@@ -1457,6 +1457,148 @@ b {
   border-color: #ffffff29;
 }
 
+.price-note {
+  font-size: 14px;
+  color: var(--ink-3);
+  margin-bottom: 18px;
+}
+
+.tier.featured .price-note {
+  color: #ffffffa3;
+}
+
+.tier-headline {
+  font-size: 23px;
+  line-height: 1.15;
+  margin: 0 0 14px;
+}
+
+.tier-includes {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 16px;
+  color: var(--ink);
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  margin-bottom: 14px;
+}
+
+.tier.featured .tier-includes {
+  background: #ffffff14;
+  border-color: #ffffff29;
+  color: #fff;
+}
+
+/* Dépliant des chapitres */
+.chapters-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 15.5px;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.chapters-toggle:hover {
+  border-color: var(--accent);
+}
+
+.tier.featured .chapters-toggle {
+  border-color: #ffffff29;
+  color: #fff;
+}
+
+.chapters-toggle .chev {
+  display: inline-block;
+  color: var(--accent);
+  font-size: 13px;
+}
+
+.chapters {
+  overflow: hidden;
+}
+
+.chapters-inner {
+  padding: 18px 2px 4px;
+}
+
+.chapter-group + .chapter-group {
+  margin-top: 20px;
+}
+
+.chapter-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.chapters ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 9px;
+}
+
+.chapters li {
+  display: flex;
+  gap: 11px;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+
+.tier.featured .chapters li {
+  color: #ffffffa3;
+}
+
+.chapters li .n {
+  flex: none;
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  color: var(--ink-3);
+  padding-top: 2px;
+}
+
+.tier.featured .chapters li .n {
+  color: #ffffff80;
+}
+
+.bonuses {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 22px;
+  display: grid;
+  gap: 11px;
+}
+
+.bonuses li {
+  display: flex;
+  gap: 11px;
+  font-size: 15.5px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.tier.featured .bonuses li {
+  color: #fff;
+}
+
+.bonuses .ico {
+  flex: none;
+}
+
 .feat {
   list-style: none;
   padding: 0;
