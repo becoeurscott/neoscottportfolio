@@ -840,6 +840,104 @@ b {
   object-fit: cover;
 }
 
+/* Preuve cliquable : pastille « Voir » au survol */
+.proof.is-zoomable {
+  cursor: zoom-in;
+}
+
+.proof-view {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  background: #ffffffee;
+  color: var(--ink);
+  font-size: 13.5px;
+  font-weight: 500;
+  box-shadow: 0 10px 24px -12px #00000030;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.proof.is-zoomable:hover .proof-view,
+.proof.is-zoomable:focus-visible .proof-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (hover: none) {
+  .proof-view {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Vue agrandie */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #0a0a0aec;
+  backdrop-filter: blur(8px);
+  display: grid;
+  place-items: center;
+  padding: 68px 20px 20px;
+  cursor: zoom-out;
+}
+
+.lightbox img {
+  max-width: min(1100px, 94vw);
+  max-height: 86vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--radius);
+  cursor: default;
+  background: #fff;
+}
+
+.lightbox-bar {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: min(1100px, 94vw);
+  padding: 8px 8px 8px 18px;
+  border-radius: var(--radius-pill);
+  background: #ffffff1a;
+  border: 1px solid #ffffff29;
+  color: #fff;
+  font-size: 14px;
+  cursor: default;
+}
+
+.lightbox-bar span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lightbox-bar button {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 0;
+  background: #fff;
+  color: var(--ink);
+  font-size: 14px;
+  cursor: pointer;
+}
+
 .proof-ph {
   display: flex;
   flex-direction: column;

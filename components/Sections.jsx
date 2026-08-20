@@ -509,12 +509,13 @@ export function Videos() {
 
 export function Testimonials() {
   const shots = [
-    { file: "temoignage-1.jpg", label: "Témoignage WhatsApp 1" },
-    { file: "temoignage-2.jpg", label: "Témoignage WhatsApp 2" },
-    { file: "temoignage-3.jpg", label: "Témoignage WhatsApp 3" },
-    { file: "temoignage-4.jpg", label: "Témoignage WhatsApp 4" },
-    { file: "temoignage-5.jpg", label: "Témoignage WhatsApp 5" },
-    { file: "temoignage-6.jpg", label: "Témoignage WhatsApp 6" },
+    { file: "temoignage-1.jpg", label: "Colis reçu — merci coach" },
+    { file: "temoignage-2.jpg", label: "Une partie de ma première commande" },
+    { file: "temoignage-5.jpg", label: "Mes premiers colis Pinduoduo" },
+    { file: "temoignage-3.jpg", label: "Commande reçue — vêtements et chaussures" },
+    { file: "temoignage-7.jpg", label: "Colis bien reçu" },
+    { file: "temoignage-6.jpg", label: "Colis groupés reçus" },
+    { file: "temoignage-4.jpg", label: "Colis en route" },
   ];
   // On répète la série pour que le rail reste plein sur les grands écrans
   const rail = [...shots, ...shots];
