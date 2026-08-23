@@ -1,10 +1,13 @@
 "use client";
 
 import { useRef } from "react";
+import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { CharReveal, Marquee, SwapText } from "./Motion";
 import { appear } from "../lib/anim";
 import Proof from "./Proof";
+
+const ParticlesBg = dynamic(() => import("./ParticlesBg"), { ssr: false });
 
 /* Logos des plateformes couvertes par la formation (dossier /public/logos) */
 const strip = [
@@ -24,6 +27,7 @@ export default function Hero() {
 
   return (
     <section className="hero" id="top" ref={ref}>
+      <ParticlesBg />
       <div className="wrap">
         <div className="hero-copy">
         <motion.div
