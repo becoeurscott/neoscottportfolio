@@ -127,7 +127,7 @@ export default function Pricing() {
           </Reveal>
           <Reveal delay={0.14}>
             <p className="muted">
-              Accès immédiat après paiement · Accès à vie · Garantie satisfait ou remboursé 7 jours
+              Accès immédiat après paiement · Accès à vie · Mises à jour incluses
             </p>
           </Reveal>
         </div>

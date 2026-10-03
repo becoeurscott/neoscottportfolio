@@ -42,7 +42,7 @@ export default function Nav() {
           {/* « Notch » : la pastille de statut, comme sur la référence */}
           <motion.div className="notch" initial={appear.notch.initial} animate={appear.notch.animate}>
             <span className="status-dot" />
-            Accès immédiat · Accès à vie · Garantie 7 jours
+            Accès immédiat · Accès à vie · +1000 élèves formés
           </motion.div>
 
           <motion.header

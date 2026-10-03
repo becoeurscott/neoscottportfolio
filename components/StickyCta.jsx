@@ -23,7 +23,7 @@ export default function StickyCta() {
           >
             <div className="txt">
               <div className="a">À partir de 6 200 F</div>
-              <div className="b">Accès à vie · Garantie 7 jours</div>
+              <div className="b">Accès à vie · +1000 élèves formés</div>
             </div>
             <a href="#offres" className="btn btn-primary">
               Voir les niveaux

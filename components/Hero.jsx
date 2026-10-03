@@ -81,7 +81,7 @@ export default function Hero() {
           <span>·</span>
           <span>Accès à vie</span>
           <span>·</span>
-          <span>Garantie 7 jours</span>
+          <span>+1000 élèves formés</span>
         </motion.div>
 
         {/* Découpe détourée : sous l'en-tête à droite sur grand écran,

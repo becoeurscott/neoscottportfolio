@@ -3,12 +3,12 @@ import "./globals.css";
 export const metadata = {
   title: "ELITE ACHAT EN CHINE — Achète en Chine au vrai prix, sans intermédiaire",
   description:
-    "Formation filmée clic par clic : Pinduoduo, Taobao, 1688, Alipay, WeChat, paiement depuis l'Afrique et logistique jusqu'à ta porte. À partir de 6 200 F. Accès à vie, garantie 7 jours.",
+    "Apprends à acheter en Chine au vrai prix, sans intermédiaire. Plus de 1000 personnes formées.",
   metadataBase: new URL("https://elite-achat-en-chine.com"),
   openGraph: {
     title: "ELITE ACHAT EN CHINE — Achète en Chine au vrai prix",
     description:
-      "Arrête de payer le prix qu'un intermédiaire a décidé pour toi. Formation filmée, accès à vie, garantie 7 jours.",
+      "Apprends à acheter en Chine au vrai prix, sans intermédiaire. Plus de 1000 personnes formées.",
     locale: "fr_FR",
     type: "website",
   },
